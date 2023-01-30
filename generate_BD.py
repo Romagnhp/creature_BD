@@ -97,22 +97,14 @@ class Creature_bd:
             db.commit()
 
     # выбор укзанной строки
-    def singleSelect(id): 
-        singleSelect = db.get(RowTableProducts, 2) # второй аргумент  - id таблици с БД
-        # print(singleSelect) # вывод адреса ячейки в памяти ПК
-    
-        # вывод значений полей БД
-        # for i in selectCondition:
-        #print(i.login, i.password)
-
-        # изменения значений полей БД
-        # singleSelect.password = "1"
-        # db.commit()
-        # db.refresh(singleSelect) # обновление значениея поля БД рекомендуется после изм. знач. поля в БД
-
+    def singleSelect(id):
+        row = Creature_bd.db.get(RowTableProducts, id)
+        return row
 
 # для проверки функции row_add_products
 # myDictionary = {'picture':"picture/Burger.png", 'product_name':"Sandvich", 'pickUp_point':'avenue', 'price':200, 'quantity':9}
 # Creature_bd.row_add_products(myDictionary)
 
-print(Creature_bd.singleSelect)
+ # вывод значений полей БД
+for el in Creature_bd.singleSelect(2):
+    print(el.product_name, el.price)
