@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import BLOB,FLOAT,TEXT, INTEGER, Column
+from sqlalchemy import BLOB,FLOAT,TEXT, INTEGER, Column, ForeignKey
 from sqlalchemy.orm import relationship
 
 BaseClass = declarative_base()
@@ -27,7 +27,7 @@ class RowTableOrders(BaseClass):
     __tablename__ = 'orders'
 
     id = Column(INTEGER, primary_key = True, autoincrement = True)
-    id_products = Column(INTEGER,)
-    id_users = Column(INTEGER)
+    id_products = Column(INTEGER, ForeignKey('user.id', ondelete='CASCADE'),)
+    id_users = Column(INTEGER, ForeignKey('user.id', ondelete='CASCADE'),)
 
     # user = relationship('Users', backref='orders')
