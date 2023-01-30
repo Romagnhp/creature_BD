@@ -27,7 +27,7 @@ class RowTableOrders(BaseClass):
     __tablename__ = 'orders'
 
     id = Column(INTEGER, primary_key = True, autoincrement = True)
-    id_products = Column(INTEGER, ForeignKey('user.id', ondelete='CASCADE'),)
-    id_users = Column(INTEGER, ForeignKey('user.id', ondelete='CASCADE'),)
+    id_products = Column(INTEGER, ForeignKey('products.id', ondelete='CASCADE'),)
+    id_users = Column(INTEGER, ForeignKey('users.id', ondelete='CASCADE'),)
 
     # user = relationship('Users', backref='orders')
