@@ -1,33 +1,53 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import BLOB,FLOAT,TEXT, INTEGER, Column, ForeignKey
+from sqlalchemy import BLOB, FLOAT,TEXT, INTEGER, Column, ForeignKey, DECIMAL
 from sqlalchemy.orm import relationship
 
 BaseClass = declarative_base()
 
-class RowTableProducts(BaseClass):
-    __tablename__ = 'products'
+class RowTableProduct(BaseClass):
+    __tablename__ = 'Products'
 
     id = Column(INTEGER, primary_key = True, autoincrement = True)
+    name = Column(TEXT)
+    description = Column(TEXT)
     picture = Column(TEXT)
-    product_name = Column(TEXT)
-    pickUp_point = Column(TEXT)
-    price = Column(FLOAT)
+    price = Column(DECIMAL)
     quantity = Column(INTEGER)
 
-class RowTableUsers(BaseClass):
-    __tablename__ = 'users'
+class RowTableOrderProduct(BaseClass):
+    __tablename__ = 'Orders-Products'
 
     id = Column(INTEGER, primary_key = True, autoincrement = True)
-    first_name = Column(TEXT)
-    last_name = Column(TEXT)
-    mail = Column(TEXT)
-    card_naumber = Column(INTEGER)
+    id_order = Column(INTEGER)
+    id_product = Column(INTEGER)
+    quantity = Column(INTEGER)
 
-class RowTableOrders(BaseClass):    
-    __tablename__ = 'orders'
+class RowTableOrder(BaseClass):
+    __tablename__ = 'Orders'
 
-    id = Column(INTEGER, primary_key = True, autoincrement = True)
-    id_products = Column(INTEGER, ForeignKey('products.id', ondelete='CASCADE'),)
-    id_users = Column(INTEGER, ForeignKey('users.id', ondelete='CASCADE'),)
+    id = Column(INTEGER, primary_key = True, autoincement = True)
+    id_user = Column(INTEGER)
+    typePay = Column(TEXT)
+    pickupPoint = Column(TEXT)
+    dateTime = Column(INTEGER)
+    
+class RowTableUser(BaseClass):
+    __tablename__ = 'Users'
 
-    # user = relationship('Users', backref='orders')
+    id_Telegram = Column(INTEGER, primary_key = True)
+    role = Column(TEXT)
+    name = Column(TEXT)
+    lastName = Column(TEXT)
+    
+class RowTableRole(BaseClass):    
+    __tablename__ = 'Roles'
+
+    id = Column(INTEGER, primary_key = True, authoincrement = True)
+    name = Column(INTEGER)
+
+class RowTablePickupPoint(BaseClass):
+    __tablename__ = 'Pickup points'    
+
+    id  = Column(INTEGER, primary_ket = True, autoincement = True)
+    name = Column(TEXT)
+    coordinats = Column(FLOAT)
