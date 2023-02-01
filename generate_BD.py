@@ -12,8 +12,7 @@ class Creature_bd:
 
     # заполнене таблицы Products для ПРИМЕРА    
     with Session(bdEngine) as db:
-        row_1 = RowTableProduct(
-            name = "Burger",
+        row_1 = RowTableProduct( name = "Burger",
             description = '''
                             veal cutlet, 
                             wheat bun, 
@@ -47,30 +46,30 @@ class Creature_bd:
         db.add(row_2)
         db.commit()
 
-        row_3 = RowTableProduct(
-            name = "French fries",
-            description = 'potatoes',
-            picture = "picture/French fries.png",
-            price = 22, 
-            quantity = 7)
-        db.add(row_3)
-        db.commit()
+        # row_3 = RowTableProduct(
+        #     name = "French fries",
+        #     description = 'potatoes',
+        #     picture = "picture/French fries.png",
+        #     price = 22, 
+        #     quantity = 7)
+        # db.add(row_3)
+        # db.commit()
 
-        row_4 = RowTableProduct(
-            name = "Hamburger",
-            description = '''
-                        grilled natural beef steak,
-                        toasted burger bun,
-                        seasoning for grill,
-                        mustard sauce,
-                        pickles,
-                        reconstituted onion,
-                        ''',
-            picture = "picture/Hamburger.png",
-            price = 20, 
-            quantity = 5)
-        db.add(row_4)
-        db.commit()
+        # row_4 = RowTableProduct(
+        #     name = "Hamburger",
+        #     description = '''
+        #                 grilled natural beef steak,
+        #                 toasted burger bun,
+        #                 seasoning for grill,
+        #                 mustard sauce,
+        #                 pickles,
+        #                 reconstituted onion,
+        #                 ''',
+        #     picture = "picture/Hamburger.png",
+        #     price = 20, 
+        #     quantity = 5)
+        # db.add(row_4)
+        # db.commit()
 
     # заполнене таблицы Orders для ПРИМЕРА
     with Session(bdEngine) as db:
@@ -96,17 +95,42 @@ class Creature_bd:
 
     # заполнене таблицы Orders-Products для ПРИМЕРА
     with Session(bdEngine) as db:
+        pr = RowTableProduct( name = "Burger2",
+            description = '''
+                            veal cutlet, 
+                            wheat bun, 
+                            American mustard, 
+                            red onion, 
+                            mayonnaise, 
+                            pickles, 
+                            lettuce leaf, 
+                            barbecue sauce;
+                            ''',
+            picture = "picture/Burger.png",
+            price = 20,
+            quantity = 5)
+
+        ord = RowTableOrder(
+            id_user=1,
+            pickupPoint='avenue Dmytro Yavornytsky 100',
+            dateTime=14,
+            typePay='cash',
+            status='ready'
+        )
+
         row_1 = RowTableOrderProduct(
-            id_order = 1,
-            id_product = 2,
+            order=ord,
+            product=pr,
+            # id_order = 1,
+            # id_product = 2,
             quantity = 10
         )
         db.add(row_1)
         db.commit()
     
         row_2 = RowTableOrderProduct(
-            id_order = 2,
-            id_product = 3,
+            # id_order = 2,
+            # id_product = 3,
             quantity = 11
         )
         db.add(row_2)
