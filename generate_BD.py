@@ -1,5 +1,6 @@
 import sqlalchemy
-from table_patern import BaseClass, RowTableProduct, RowTableOrderProduct, RowTableOrder, RowTableUser, RowTableRole,  RowTablePickupPoint   
+from table_patern import BaseClass, RowTableProduct, RowTableOrder, RowTableOrderProduct
+# RowTableRole,  RowTablePickupPoint, RowTableUser,  
 from sqlalchemy.orm import Session
 
 class Creature_bd:
@@ -71,28 +72,46 @@ class Creature_bd:
         db.add(row_4)
         db.commit()
 
+    # заполнене таблицы Orders для ПРИМЕРА
     with Session(bdEngine) as db:
-        pass
-
-    # заполнене таблицы Users для ПРИМЕРА
-    with Session(bdEngine) as db:
-        row_1 = RowTableUser(
-            id_Telegram = 101,
-            role = RowTableRole,
-            name = 'Roman'
-            lastName = 'Honcharov'
-        )
+        row_1 = RowTableOrder(
+            id_user = 1,
+            pickupPoint = 'avenue Dmytro Yavornytsky 100',
+            dateTime = 14,
+            typePay = 'cash',
+            status = 'ready'
+            )
         db.add(row_1)
         db.commit()
 
-        row_2 = RowTableUser(
-            id_Telegram = 101,
-            role = RowTableRole,
-            name = 'Roman1',
-            lastName = 'Honcharov1'
+        row_2 = RowTableOrder(
+            id_user = 2,
+            pickupPoint = 'avenue Dmytro Yavornytsky 50',
+            dateTime = 13,
+            typePay = 'cash',
+            status = 'wait'
+            )
+        db.add(row_2)
+        db.commit()
+
+    # заполнене таблицы Orders-Products для ПРИМЕРА
+    with Session(bdEngine) as db:
+        row_1 = RowTableOrderProduct(
+            id_order = 1,
+            id_product = 2,
+            quantity = 10
+        )
+        db.add(row_1)
+        db.commit()
+    
+        row_2 = RowTableOrderProduct(
+            id_order = 2,
+            id_product = 3,
+            quantity = 11
         )
         db.add(row_2)
         db.commit()
+
 
 
 
