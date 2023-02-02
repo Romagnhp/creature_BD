@@ -98,14 +98,16 @@ class Creature_bd:
     with Session(bdEngine) as db:
 
         row_1 = RowTableOrderProduct(
-
+            id_order = 1,
+            id_product = 1,
             quantity = 10
         )
         db.add(row_1)
         db.commit()
     
         row_2 = RowTableOrderProduct(
-
+            id_order = 2,
+            id_product = 2,
             quantity = 11
         )
         db.add(row_2)
@@ -138,6 +140,17 @@ class Creature_bd:
             db.add(row)
             db.commit()
 
+    # функция добавления строки в таблицу ЗАКАЗЫ-ТОВАРЫ
+    def row_add_OrderPoduct(orderProductDictionary:dict)->RowTableOrderProduct:
+        with Session(Creature_bd.bdEngine) as db:
+            row = RowTableOrderProduct(
+            id_order = orderProductDictionary['id_order'],
+            id_product = orderProductDictionary['id_product'],
+            quantity = orderProductDictionary['quantity']
+        )
+        db.add(row)
+        db.commit()
+
     # выбор укзанной строки таблицы Products по primay_key
     def rowSelectProduct(id)->dict:
         with Session(Creature_bd.bdEngine) as db:
@@ -152,6 +165,12 @@ class Creature_bd:
             rowProoduct = {'id_user':row.id_user, 'pickupPoint':row.pickupPoint, 'dateTime':row.dateTime, 'typePay':row.typePay, 'status':row.status}
         return rowProoduct 
 
+    def rowSelectOrderPoduct(id)->dict:
+        with Session(Creature_bd.bdEngine) as db:
+            row = db.get(RowTableOrderProduct, id)
+            rowOrderProduct = {'id_order':row.id_order, 'id_product':row.id_product, 'quantity':row.quantity}
+        return rowOrderProduct 
+
     # изменение значения поля таблицы Products 
     def changeValesProduct(poductPrimary_key, nameValues, newValues):
         with Session(Creature_bd.bdEngine) as db:
@@ -159,7 +178,6 @@ class Creature_bd:
             row.nameValues = newValues
             db.commit()
             db.refresh(row)
-
 
 
 # ПРОВЕРКА ФУНКЦИЙ
@@ -170,10 +188,15 @@ Creature_bd.row_add_products(productDictionary)
 orderDictionary = {'id_user':10, 'pickupPoint':"avenue Dmytro Yavornytsky 100", 'dateTime':14, 'typePay':"cash", 'status': "ready"}
 Creature_bd.row_add_orders(orderDictionary)
 
-print(Creature_bd.rowSelectProduct(1))
+orderProductDictionary = {'id_order':1, 'id_product':4, 'quantity':3}
+Creature_bd.row_add_OrderPoduct(orderProductDictionary)
 
-print(Creature_bd.rowSelectOrder(1))
+# print(Creature_bd.rowSelectProduct(1))
 
-Creature_bd.changeValesProduct(3, 'name', 'бургер1111')
+# print(Creature_bd.rowSelectOrder(1))
+
+# print(Creature_bd.rowSelectOrderPoduct(1))
+
+# Creature_bd.changeValesProduct(3, 'name', 'бургер1111')
 
 

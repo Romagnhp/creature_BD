@@ -41,4 +41,3 @@ class RowTableOrderProduct(BaseClass):
     order = relationship("RowTableOrder", back_populates="products")
     product = relationship("RowTableProduct", back_populates="orders")
     
-    
