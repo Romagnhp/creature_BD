@@ -111,6 +111,7 @@ class Creature_bd:
         db.add(row_2)
         db.commit()
 
+
     # функция добавления строки в таблицу Products
     def row_add_products(productDictionary:dict)->RowTableProduct:
         with Session(Creature_bd.bdEngine) as db:
@@ -155,11 +156,13 @@ class Creature_bd:
     def changeValesProduct(poductPrimary_key, nameValues, newValues):
         with Session(Creature_bd.bdEngine) as db:
             row = db.get(RowTableProduct, poductPrimary_key)
-            row.name = newValues
+            row.nameValues = newValues
             db.commit()
             db.refresh(row)
 
 
+
+# ПРОВЕРКА ФУНКЦИЙ
 
 productDictionary = {'name':"French freies_1", 'description': "potetoes", 'picture':"picture/French fries.png", 'price':200, 'quantity':9}
 Creature_bd.row_add_products(productDictionary)
