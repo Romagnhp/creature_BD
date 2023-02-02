@@ -2,7 +2,6 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy import BLOB, FLOAT,TEXT, INTEGER, Column, ForeignKey, DECIMAL
 from sqlalchemy.orm import relationship
 
-
 BaseClass = declarative_base()
 
 class RowTableProduct(BaseClass):
@@ -12,7 +11,7 @@ class RowTableProduct(BaseClass):
     name = Column(TEXT)
     description = Column(TEXT)
     picture = Column(TEXT)
-    price = Column(FLOAT)
+    price = Column(DECIMAL)
     quantity = Column(INTEGER)
 
     orders = relationship("RowTableOrderProduct", back_populates = "product")
@@ -33,8 +32,9 @@ class RowTableOrderProduct(BaseClass):
     __tablename__ = 'Orders-Products'
 
     id = Column(INTEGER, primary_key = True)
-    id_order = Column(ForeignKey("Products.id"))
-    id_product = Column(ForeignKey("Orders.id"))
+
+    id_order = Column(ForeignKey("Orders.id"))
+    id_product = Column(ForeignKey("Products.id"))
     
     quantity = Column(INTEGER)
 
