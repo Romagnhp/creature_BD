@@ -11,7 +11,7 @@ class RowTableProduct(BaseClass):
     name = Column(TEXT)
     description = Column(TEXT)
     picture = Column(TEXT)
-    price = Column(DECIMAL)
+    price = Column(FLOAT)
     quantity = Column(INTEGER)
 
     orders = relationship("RowTableOrderProduct", back_populates = "product")
@@ -41,23 +41,4 @@ class RowTableOrderProduct(BaseClass):
     order = relationship("RowTableOrder", back_populates="products")
     product = relationship("RowTableProduct", back_populates="orders")
     
-# class RowTableUser(BaseClass):
-#     __tablename__ = 'Users'
-
-#     id_Telegram = Column(INTEGER, primary_key = True)
-#     role = Column(TEXT)
-#     name = Column(TEXT)
-#     lastName = Column(TEXT)
     
-# class RowTableRole(BaseClass):    
-#     __tablename__ = 'Roles'
-
-#     id = Column(INTEGER, primary_key = True, authoincrement = True)
-#     name = Column(INTEGER)
-
-# class RowTablePickupPoint(BaseClass):
-#     __tablename__ = 'Pickup points'    
-
-#     id  = Column(INTEGER, primary_ket = True, autoincement = True)
-#     name = Column(TEXT)
-#     coordinats = Column(FLOAT)

@@ -98,58 +98,79 @@ class Creature_bd:
     with Session(bdEngine) as db:
 
         row_1 = RowTableOrderProduct(
-           
-            # id_order = ord,
-            # id_product = pr,
+
             quantity = 10
         )
         db.add(row_1)
         db.commit()
     
         row_2 = RowTableOrderProduct(
-            # id_order = 2,
-            # id_product = 3,
+
             quantity = 11
         )
         db.add(row_2)
         db.commit()
 
-
-
-
     # функция добавления строки в таблицу Products
-    # def row_add_products(productDictionary:dict)->RowTableProducts:
-    #     with Session(Creature_bd.bdEngine) as db:
-    #         row = RowTableProducts(
-    #             picture = productDictionary['picture'], 
-    #             product_name = productDictionary['product_name'], 
-    #             pickUp_point = productDictionary['pickUp_point'], 
-    #             price = productDictionary['price'], 
-    #             quantity = productDictionary['quantity'])
-    #         db.add(row)
-    #         db.commit()
+    def row_add_products(productDictionary:dict)->RowTableProduct:
+        with Session(Creature_bd.bdEngine) as db:
+            row = RowTableProduct( 
+                name = productDictionary['name'],
+                description = productDictionary['description'],
+                picture = productDictionary['picture'], 
+                price = productDictionary['price'],
+                quantity = productDictionary['quantity']
+                )    
+            db.add(row)
+            db.commit()        
 
-    # # функция добавления строки в таблицу Products
-    # def row_add_users(userDictionary:dict)->RowTableUsers:
-    #     with Session(Creature_bd.bdEngine) as db:
-    #         row = RowTableUsers(
-    #             first_name = userDictionary['first_name'], 
-    #             last_name = userDictionary['last_name'], 
-    #             mail = userDictionary['mail'], 
-    #             card_naumber = userDictionary['card_naumber']
-    #         )
-    #         db.add(row)
-    #         db.commit()
+  # функция добавления строки в таблицу Orders
+    def row_add_orders(orderDictionary:dict)->RowTableOrder:
+        with Session(Creature_bd.bdEngine) as db:
+            row = RowTableOrder(
+                id_user = orderDictionary['id_user'],
+                pickupPoint = orderDictionary['pickupPoint'],
+                dateTime = orderDictionary['dateTime'],
+                typePay = orderDictionary['typePay'],
+                status = orderDictionary['status']
+            )
+            db.add(row)
+            db.commit()
 
-    # # выбор укзанной строки
-    # def singleSelect(id):
-    #     row = Creature_bd.db.get(RowTableProducts, id)
-    #     return row
+    # выбор укзанной строки таблицы Products по primay_key
+    def rowSelectProduct(id)->dict:
+        with Session(Creature_bd.bdEngine) as db:
+            row = db.get(RowTableProduct, id)
+            rowProoduct = {'name':row.name, 'description':row.description, 'picture':row.picture, 'price':row.price, 'quantity':row.quantity}
+        return rowProoduct    
 
-# для проверки функции row_add_products
-# myDictionary = {'picture':"picture/Burger.png", 'product_name':"Sandvich", 'pickUp_point':'avenue', 'price':200, 'quantity':9}
-# Creature_bd.row_add_products(myDictionary)
+    # выбор укзанной строки таблицы Orders по primay_key
+    def rowSelectOrder(id)->dict:
+        with Session(Creature_bd.bdEngine) as db:
+            row = db.get(RowTableOrder, id)
+            rowProoduct = {'id_user':row.id_user, 'pickupPoint':row.pickupPoint, 'dateTime':row.dateTime, 'typePay':row.typePay, 'status':row.status}
+        return rowProoduct 
 
- # вывод значений полей БД
-# for el in Creature_bd.singleSelect(2):
-#     print(el.product_name, el.price)
+    # изменение значения поля таблицы Products 
+    def changeValesProduct(poductPrimary_key, nameValues, newValues):
+        with Session(Creature_bd.bdEngine) as db:
+            row = db.get(RowTableProduct, poductPrimary_key)
+            row.name = newValues
+            db.commit()
+            db.refresh(row)
+
+
+
+productDictionary = {'name':"French freies_1", 'description': "potetoes", 'picture':"picture/French fries.png", 'price':200, 'quantity':9}
+Creature_bd.row_add_products(productDictionary)
+
+orderDictionary = {'id_user':10, 'pickupPoint':"avenue Dmytro Yavornytsky 100", 'dateTime':14, 'typePay':"cash", 'status': "ready"}
+Creature_bd.row_add_orders(orderDictionary)
+
+print(Creature_bd.rowSelectProduct(1))
+
+print(Creature_bd.rowSelectOrder(1))
+
+Creature_bd.changeValesProduct(3, 'name', 'бургер1111')
+
+
