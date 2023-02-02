@@ -140,7 +140,7 @@ class Creature_bd:
             db.add(row)
             db.commit()
 
-    # функция добавления строки в таблицу ЗАКАЗЫ-ТОВАРЫ
+    # функция добавления строки в таблицу Orders-Products
     def row_add_OrderPoduct(orderProductDictionary:dict)->RowTableOrderProduct:
         with Session(Creature_bd.bdEngine) as db:
             row = RowTableOrderProduct(
@@ -151,27 +151,35 @@ class Creature_bd:
         db.add(row)
         db.commit()
 
-    # выбор укзанной строки таблицы Products по primay_key
+    # функция выбора всех строк таблицы
+    def tableSelect(tableName)->list:
+        with Session(Creature_bd.bdEngine) as db:
+            listTable = db.query(tableName).all() 
+        return listTable
+
+
+    # функция выбор укзанной строки таблицы Products по primay_key
     def rowSelectProduct(id)->dict:
         with Session(Creature_bd.bdEngine) as db:
             row = db.get(RowTableProduct, id)
             rowProoduct = {'name':row.name, 'description':row.description, 'picture':row.picture, 'price':row.price, 'quantity':row.quantity}
         return rowProoduct    
 
-    # выбор укзанной строки таблицы Orders по primay_key
+    # функция выбор укзанной строки таблицы Orders по primay_key
     def rowSelectOrder(id)->dict:
         with Session(Creature_bd.bdEngine) as db:
             row = db.get(RowTableOrder, id)
             rowProoduct = {'id_user':row.id_user, 'pickupPoint':row.pickupPoint, 'dateTime':row.dateTime, 'typePay':row.typePay, 'status':row.status}
         return rowProoduct 
 
+    # функция выбор указанной сторки таблицы Orders-Products
     def rowSelectOrderPoduct(id)->dict:
         with Session(Creature_bd.bdEngine) as db:
             row = db.get(RowTableOrderProduct, id)
             rowOrderProduct = {'id_order':row.id_order, 'id_product':row.id_product, 'quantity':row.quantity}
         return rowOrderProduct 
 
-    # изменение значения поля таблицы Products 
+    # функция изменение значения поля таблицы Products 
     def changeValesProduct(poductPrimary_key, nameValues, newValues):
         with Session(Creature_bd.bdEngine) as db:
             row = db.get(RowTableProduct, poductPrimary_key)
@@ -199,4 +207,4 @@ Creature_bd.row_add_OrderPoduct(orderProductDictionary)
 
 # Creature_bd.changeValesProduct(3, 'name', 'бургер1111')
 
-
+print(Creature_bd.tableSelect(RowTableProduct))
