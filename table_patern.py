@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 BaseClass = declarative_base()
 
-class RowTableProduct(BaseClass):
+class Product(BaseClass):
     __tablename__ = 'Products'
 
     id = Column(INTEGER, primary_key = True, autoincrement = True)
@@ -14,9 +14,9 @@ class RowTableProduct(BaseClass):
     price = Column(FLOAT)
     quantity = Column(INTEGER)
 
-    orders = relationship("RowTableOrderProduct", back_populates = "product")
+    orders = relationship("OrderProduct", back_populates = "product")
 
-class RowTableOrder(BaseClass):
+class Order(BaseClass):
     __tablename__ = 'Orders'
 
     id = Column(INTEGER, primary_key = True, autoincrement = True)
@@ -26,9 +26,9 @@ class RowTableOrder(BaseClass):
     typePay = Column(TEXT)
     status = Column(TEXT)
 
-    products = relationship("RowTableOrderProduct", back_populates = "order")
+    products = relationship("OrderProduct", back_populates = "order")
 
-class RowTableOrderProduct(BaseClass):
+class OrderProduct(BaseClass):
     __tablename__ = 'Orders-Products'
 
     id = Column(INTEGER, primary_key = True)
@@ -38,6 +38,6 @@ class RowTableOrderProduct(BaseClass):
     
     quantity = Column(INTEGER)
 
-    order = relationship("RowTableOrder", back_populates="products")
-    product = relationship("RowTableProduct", back_populates="orders")
+    order = relationship("Order", back_populates="products")
+    product = relationship("Product", back_populates="orders")
     
